@@ -161,7 +161,7 @@ for msg in st.session_state.messages:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # User input
-user_input = st.chat_input("Apna message likho...")
+user_input = st.chat_input("TEXT HERE...")
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
 
