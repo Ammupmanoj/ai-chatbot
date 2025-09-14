@@ -1,21 +1,36 @@
 # 🤖 AI Chatbot
 
-A stylish Streamlit-based chatbot powered by OpenAI. Built with ❤️ by Ammu.
+[![Live Demo](https://img.shields.io/badge/🚀-Live%20Demo-blue?style=for-the-badge)](https://ai-chatbotbuildbyammupmanoj.streamlit.app/)
 
-## 🚀 Features
-- Clean UI with avatars and timestamps
-- Typing animation
-- Sound effects
-- Easy to customize
+A sleek, interactive chatbot built with **Streamlit** and powered by **OpenAI GPT-4o**. Designed for real-time conversation with a clean UI, sound effects, and typing animations. 
 
-## 🛠️ Setup
-1. Clone the repo  
-2. Create `.env` file with your OpenAI key  
-3. Install dependencies: `pip install -r requirements.txt`  
-4. Run the app: `streamlit run app.py`
+---
 
-## 📸 Preview
-![screenshot](assets/chatbot_preview.png)
+## ✨ Features
 
-## 👨‍💻 Author
-Made with ❤️ by Ammu | Powered by OpenAI
+- 💬 Real-time chat powered by GPT-4o  
+- 🎨 Stylish UI with avatars and bubble layout  
+- ⏱️ Timestamps and typing animation  
+- 🔊 Sound feedback on bot reply  
+- 🔐 Secure API key handling via `.env` and Streamlit Secrets  
+- 🚀 Easy to deploy and customize
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer       | Tools Used            |
+|-------------|------------------------|
+| Frontend    | Streamlit + Custom CSS |
+| Backend     | OpenAI API (GPT-4o)    |
+| Environment | `.env` + `python-dotenv` |
+| Deployment  | Streamlit Cloud        |
+
+---
+
+## 📦 Setup Instructions
+
+1. **Clone the repo**  
+   ```bash
+   git clone https://github.com/Ammupmanoj/ai-chatbot.git
+   cd ai-chatbot
