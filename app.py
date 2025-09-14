@@ -110,7 +110,7 @@ body {
 """, unsafe_allow_html=True)
 
 # Creator badge at top
-st.markdown('<div class="creator-banner">Made with ❤️ by Ammu | Powered by OpenAI</div>', unsafe_allow_html=True)
+st.markdown('<div class="creator-banner">Made with ❤️ by Ammu P Manoj | Powered by OpenAI</div>', unsafe_allow_html=True)
 
 # Header
 st.markdown(f"""
@@ -161,7 +161,7 @@ for msg in st.session_state.messages:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # User input
-user_input = st.chat_input("TEXT HERE...")
+user_input = st.chat_input("Text here...")
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
 
