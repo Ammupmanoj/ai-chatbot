@@ -109,8 +109,12 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
-# Creator badge at top
-st.markdown('<div class="creator-banner">Made with ❤️ by Ammu P Manoj | Powered by OpenAI</div>', unsafe_allow_html=True)
+# Creator badge with GitHub link
+st.markdown('''
+<div class="creator-banner">
+    Made with ❤️ by <a href="https://github.com/Ammupmanoj" target="_blank" style="color:#3b82f6; text-decoration:none;">Ammu P Manoj</a> | Powered by OpenAI
+</div>
+''', unsafe_allow_html=True)
 
 # Header
 st.markdown(f"""
