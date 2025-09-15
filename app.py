@@ -13,21 +13,15 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Page config
 st.set_page_config(page_title="AI Chatbot", page_icon="🤖", layout="centered")
 
-# Inject CSS
+# Custom CSS
 st.markdown("""
 <style>
 body {
     background: white;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-}
-.creator-banner {
-    text-align: center;
-    font-size: 12px;
-    color: #6b7280;
-    margin-bottom: 5px;
+    font-family: 'Inter', sans-serif;
 }
 .chat-container {
-    max-height: 550px;
+    max-height: 500px;
     overflow-y: auto;
     padding: 20px;
     border-radius: 16px;
@@ -46,7 +40,6 @@ body {
     border-radius: 12px;
     max-width: 70%;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    animation: fadeIn 0.3s ease-in-out;
     font-size: 15px;
 }
 .user-bubble {
@@ -65,31 +58,10 @@ body {
     border-radius: 50%;
     margin: 0 8px;
 }
-.typing {
-    font-style: italic;
-    color: #6b7280;
-    margin-left: 45px;
-    animation: blink 1s infinite;
-}
-@keyframes blink {
-    0% { opacity: 0.2; }
-    50% { opacity: 1; }
-    100% { opacity: 0.2; }
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 .timestamp {
     font-size: 10px;
     color: #9ca3af;
     margin: 2px 45px;
-}
-.footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 12px;
-    color: #6b7280;
 }
 .stTextInput > div > input {
     border-radius: 12px !important;
@@ -106,18 +78,24 @@ body {
     padding: 8px 16px !important;
     font-weight: bold;
 }
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+}
 </style>
 """, unsafe_allow_html=True)
 
 # Creator badge
-st.markdown('''
-<div class="creator-banner">
-    Made with ❤️ by <a href="https://github.com/Ammupmanoj" target="_blank" style="color:#3b82f6; text-decoration:none;">Ammu P Manoj</a> | Powered by OpenAI
+st.markdown("""
+<div style="text-align:center; font-size:12px; color:#6b7280; margin-bottom:10px;">
+Made with ❤️ by <a href="https://github.com/Ammupmanoj" target="_blank" style="color:#3b82f6;">Ammu P Manoj</a> | Powered by OpenAI
 </div>
-''', unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Header
-st.markdown(f"""
+st.markdown("""
 <div style="display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
     <img src="https://i.imgur.com/rdm3W9t.png" style="width:40px; height:40px; margin-right:10px;">
     <h1 style="font-size:28px; margin:0;">AI Chatbot</h1>
@@ -142,7 +120,7 @@ def play_sound():
 
 # Session state
 if "messages" not in st.session_state:
-    st.session_state["messages"] = []
+    st.session_state.messages = []
 
 # Chat display
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
@@ -164,36 +142,32 @@ for msg in st.session_state.messages:
         )
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Input box
+# Input + Send
 user_input = st.text_input("Ask anything...", key="input")
-if st.button("Send") and user_input:
+send_clicked = st.button("Send")
+
+if send_clicked and user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
 
-    placeholder = st.empty()
-    with placeholder.container():
-        st.markdown('<div class="bot-msg"><img src="https://i.imgur.com/rdm3W9t.png" class="avatar">'
-                    '<div class="bot-bubble typing">Typing...</div></div>', unsafe_allow_html=True)
-    time.sleep(1.5)
+    with st.spinner("Typing..."):
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=st.session_state.messages
+        )
+        bot_reply = response.choices[0].message.content
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=st.session_state.messages
-    )
-    bot_reply = response.choices[0].message.content
-
-    placeholder.empty()
     st.session_state.messages.append({"role": "assistant", "content": bot_reply})
     play_sound()
-    st.rerun()
+    st.experimental_rerun()
 
 # Clear chat
 if st.button("🗑 Clear Chat"):
     st.session_state.messages = []
-    st.rerun()
+    st.experimental_rerun()
 
 # Footer
 st.markdown("""
 <div class="footer">
-    AI can make mistakes. Please double-check responses.
+AI can make mistakes. Please double-check responses.
 </div>
 """, unsafe_allow_html=True)
