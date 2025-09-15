@@ -13,13 +13,12 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Page config
 st.set_page_config(page_title="AI Chatbot", page_icon="🤖", layout="centered")
 
-# Inject CSS and JS
+# Inject CSS
 st.markdown("""
 <style>
 body {
     background: white;
-    color: black;
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 .creator-banner {
     text-align: center;
@@ -30,10 +29,11 @@ body {
 .chat-container {
     max-height: 550px;
     overflow-y: auto;
-    padding: 15px;
-    border-radius: 12px;
-    background: #f9f9f9;
-    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     border: 1px solid #e5e7eb;
 }
 .user-msg, .bot-msg {
@@ -85,31 +85,31 @@ body {
     color: #9ca3af;
     margin: 2px 45px;
 }
-.stChatInput textarea {
-    border-radius: 12px !important;
-    padding: 12px !important;
-    background: #f3f4f6 !important;
-    color: black !important;
-    font-size: 16px !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.stChatInput button {
-    background-color: #3b82f6 !important;
-    color: white !important;
-    border-radius: 8px !important;
-    padding: 8px 16px !important;
-    font-weight: bold;
-}
 .footer {
     margin-top: 20px;
     text-align: center;
     font-size: 12px;
     color: #6b7280;
 }
+.stTextInput > div > input {
+    border-radius: 12px !important;
+    padding: 14px !important;
+    background: #f3f4f6 !important;
+    color: black !important;
+    font-size: 16px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.stButton > button {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-weight: bold;
+}
 </style>
 """, unsafe_allow_html=True)
 
-# Creator badge with GitHub link
+# Creator badge
 st.markdown('''
 <div class="creator-banner">
     Made with ❤️ by <a href="https://github.com/Ammupmanoj" target="_blank" style="color:#3b82f6; text-decoration:none;">Ammu P Manoj</a> | Powered by OpenAI
@@ -164,9 +164,9 @@ for msg in st.session_state.messages:
         )
 st.markdown('</div>', unsafe_allow_html=True)
 
-# User input
-user_input = st.chat_input("Text here...")
-if user_input:
+# Input box
+user_input = st.text_input("Ask anything...", key="input")
+if st.button("Send") and user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     placeholder = st.empty()
@@ -190,3 +190,10 @@ if user_input:
 if st.button("🗑 Clear Chat"):
     st.session_state.messages = []
     st.rerun()
+
+# Footer
+st.markdown("""
+<div class="footer">
+    AI can make mistakes. Please double-check responses.
+</div>
+""", unsafe_allow_html=True)
